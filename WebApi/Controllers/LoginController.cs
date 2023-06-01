@@ -1,4 +1,5 @@
-﻿using BLL.Dto.Users;
+﻿using BLL.Dto.Errors;
+using BLL.Dto.Users;
 using BLL.ExtensionMethods.Mapping;
 using BLL.Services.Interfaces;
 using BLL.Services.Realizations.Jwt;
@@ -24,20 +25,43 @@ namespace WebApi.Controllers
             _userManager = userManager;
             _jwtTokenService = jwtTokenService;
         }
-        [HttpPost]
+        [HttpPost("password")]
         public async Task<IActionResult> LoginWithPassword([FromForm]SellerLoginDto sellerLoginDto)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
             var seller = await _userManager.FindByNameAsync(sellerLoginDto.Login);
-            var result = await _signInManager.CheckPasswordSignInAsync(seller, sellerLoginDto.Password,false);
+            if (seller is null)
+            {
+                return BadRequest(new ErrorResponceMessage
+                {
+                    Error = "Auth-0001",
+                    Message = "Incorrect login or password",
+                    Details = "Ensure that the username and password included in the request are correct"
+                });
+            }
+            var result = await _signInManager.CheckPasswordSignInAsync(seller, sellerLoginDto.Password,true);
             if (result.Succeeded)
             {
                 var token = _jwtTokenService.GenerateToken();
                 return Ok(new {token});
             }
+            else if (result.IsLockedOut)
+            {
+                return BadRequest(new ErrorResponceMessage
+                {
+                    Error = "Auth-0002",
+                    Message = "Too many attempts",
+                    Details = "Try later"
+                });
+            }
             else
             {
-                return NotFound();
+                return BadRequest(new ErrorResponceMessage
+                {
+                    Error = "Auth-0001",
+                    Message="Incorrect login or password",
+                    Details="Ensure that the username and password included in the request are correct"
+                });
             }
         }
     }
