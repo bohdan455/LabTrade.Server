@@ -20,7 +20,7 @@ namespace BLL.Services.Realizations.Jwt
         {
             _config = config;
         }
-        public string GenerateToken(IEnumerable<Claim> claims)
+        public string GenerateToken(IEnumerable<Claim>? claims = null)
         {
             var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JwtSettings:Key"]));
 

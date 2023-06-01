@@ -1,4 +1,5 @@
 ﻿using BLL.Dto.Users;
+using BLL.ExtensionMethods.Mapping;
 using DataAccess.Entities.User;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -15,15 +16,11 @@ namespace WebApi.Controllers
         {
             _userManager = userManager;
         }
-        [HttpPost]
-        public async Task<IActionResult> RegisterAsync([FromForm]SellerRegistrationDto sellerRegistrationDto)
+        [HttpPost("password")]
+        public async Task<IActionResult> RegisterWithPasswordAsync([FromForm]SellerRegistrationDto sellerRegistrationDto)
         {
             if(!ModelState.IsValid) return BadRequest(ModelState);
-            var seller = new Seller
-            {
-                UserName = sellerRegistrationDto.Login,
-                Email = sellerRegistrationDto.Email,
-            };
+            var seller = sellerRegistrationDto.ToSeller();
             var result = await _userManager.CreateAsync(seller, sellerRegistrationDto.Password);
             if (result.Succeeded)
             {
