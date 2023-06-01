@@ -10,6 +10,9 @@ namespace WebApi.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-
+        public LoginController()
+        {
+            
+        }
     }
 }

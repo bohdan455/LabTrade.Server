@@ -1,6 +1,9 @@
 ﻿using BLL.Services.Interfaces;
 using BLL.Services.Realizations.Jwt;
+using DataAccess.Entities.User;
+using DataAccess.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -23,6 +26,13 @@ namespace WebApi.Extensions
                 };
             });
             builder.Services.AddAuthorization();
+            builder.Services.AddIdentity<Seller,IdentityRole>(options =>
+            {
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
+
+                options.User.RequireUniqueEmail = true;
+            }).AddEntityFrameworkStores<LabTradeDbContext>();
         }
         public static IServiceCollection AddWebServices(this IServiceCollection services)
         {
