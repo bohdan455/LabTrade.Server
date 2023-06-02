@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using DataAccess.Entities.Lab;
+using DataAccess.Entities.Money;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -13,6 +15,7 @@ namespace DataAccess.Entities.User
     {
         [Column(TypeName="decimal(8,2)")]
         [Required]
-        public decimal Balance { get; set; }
+        public ICollection<Transaction>? Transactions { get; set; }
+        public ICollection<LabWork>? LabWorks { get; set; }
     }
 }

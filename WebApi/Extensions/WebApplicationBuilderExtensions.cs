@@ -1,7 +1,7 @@
 ﻿using BLL.Services.Interfaces;
 using BLL.Services.Realizations.Jwt;
+using DataAccess;
 using DataAccess.Entities.User;
-using DataAccess.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;

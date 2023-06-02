@@ -1,4 +1,4 @@
-using DataAccess.Repositories;
+using DataAccess;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Extensions;
 
