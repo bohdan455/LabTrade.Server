@@ -1,9 +1,14 @@
 using DataAccess;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using WebApi.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
-
+// Add logger
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .CreateLogger();
+builder.Host.UseSerilog();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

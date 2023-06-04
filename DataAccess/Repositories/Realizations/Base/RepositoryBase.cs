@@ -1,6 +1,7 @@
 ﻿using DataAccess.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,8 +29,12 @@ namespace DataAccess.Repositories.Realizations.Base
         }
         public void Create(T entity)
         {
+            //TODO Delete this
+            Console.WriteLine("Start");
             _context.Set<T>().Add(entity);
             _context.SaveChanges();
+            //TODO Delete this
+            Console.WriteLine("End");
         }
         public async Task CreateAsync(T entity)
         {
