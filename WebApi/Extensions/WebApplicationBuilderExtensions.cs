@@ -3,6 +3,7 @@ using BLL.Services.Realizations.Jwt;
 using DataAccess;
 using DataAccess.Entities.Money;
 using DataAccess.Entities.User;
+using DataAccess.Repositories.Interfaces;
 using DataAccess.Repositories.Realizations.Lab;
 using DataAccess.Repositories.Realizations.Money;
 using DataAccess.Repositories.Realizations.User;
@@ -45,11 +46,11 @@ namespace WebApi.Extensions
         }
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
-            services.AddTransient<LabFileRepository>();
-            services.AddTransient<LabWorkRepository>();
-            services.AddTransient<UniversityRepository>();
-            services.AddTransient<TransactionRepository>();
-            services.AddTransient<SellerRepository>();
+            services.AddTransient<ILabFileRepository,LabFileRepository>();
+            services.AddTransient<ILabWorkRepository,LabWorkRepository>();
+            services.AddTransient<IUniversityRepository,UniversityRepository>();
+            services.AddTransient<ITransactionRepository,TransactionRepository>();
+            services.AddTransient<ISellerRepository,SellerRepository>();
             return services;
         }
     }

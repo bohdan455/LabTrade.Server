@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DataAccess.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repositories.Realizations.Base
 {
-    public abstract class RepositoryBase<T> where T : class
+    public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
         private readonly LabTradeDbContext _context;
 
@@ -21,7 +22,7 @@ namespace DataAccess.Repositories.Realizations.Base
         {
             return _context.Set<T>().AsNoTracking();
         }
-        public IQueryable<T> GetByCondition(Expression<Func<T,bool>> expression)
+        public IQueryable<T> GetByCondition(Expression<Func<T, bool>> expression)
         {
             return _context.Set<T>().Where(expression).AsNoTracking();
         }
@@ -41,10 +42,10 @@ namespace DataAccess.Repositories.Realizations.Base
         {
             _context.Set<T>().Remove(entity);
         }
-        public IQueryable<T>? Include(params Expression<Func<T,object>>[] expression)
+        public IQueryable<T>? Include(params Expression<Func<T, object>>[] expression)
         {
-            IIncludableQueryable<T,object> query = null;
-            if(expression.Any())
+            IIncludableQueryable<T, object> query = null;
+            if (expression.Any())
                 query = _context.Set<T>().Include(expression[0]);
 
             for (int queryIndex = 1; queryIndex < expression.Length; queryIndex++)

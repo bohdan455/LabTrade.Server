@@ -1,4 +1,5 @@
-﻿using DataAccess.Repositories.Realizations.Base;
+﻿using DataAccess.Entities.Money;
+using DataAccess.Repositories.Realizations.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repositories.Realizations.Money
 {
-    public class TransactionRepository : RepositoryBase<TransactionRepository>
+    public class TransactionRepository : RepositoryBase<Transaction>,ITransactionRepository
     {
         public TransactionRepository(LabTradeDbContext context)
             : base(context)

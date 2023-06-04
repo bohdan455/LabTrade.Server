@@ -1,4 +1,5 @@
 ﻿using DataAccess.Entities.Lab;
+using DataAccess.Repositories.Interfaces;
 using DataAccess.Repositories.Realizations.Base;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repositories.Realizations.Lab
 {
-    public class LabFileRepository : RepositoryBase<LabFile>
+    public class LabFileRepository : RepositoryBase<LabFile>, ILabFileRepository
     {
         public LabFileRepository(LabTradeDbContext context)
             : base(context)
