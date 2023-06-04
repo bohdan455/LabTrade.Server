@@ -20,19 +20,21 @@ namespace DataAccess.Repositories.Realizations.Base
         }
         public IQueryable<T> GetAll()
         {
-            return _context.Set<T>().AsNoTracking();
+            return _context.Set<T>();
         }
         public IQueryable<T> GetByCondition(Expression<Func<T, bool>> expression)
         {
-            return _context.Set<T>().Where(expression).AsNoTracking();
+            return _context.Set<T>().Where(expression);
         }
         public void Create(T entity)
         {
             _context.Set<T>().Add(entity);
+            _context.SaveChanges();
         }
         public async Task CreateAsync(T entity)
         {
             await _context.Set<T>().AddAsync(entity);
+            await _context.SaveChangesAsync();
         }
         public void Update(T entity)
         {
@@ -54,6 +56,10 @@ namespace DataAccess.Repositories.Realizations.Base
             }
 
             return (IQueryable<T>)query ?? _context.Set<T>();
+        }
+        public async Task<T> GetFirstAsync(Expression<Func<T, bool>> expression)
+        {
+            return await _context.Set<T>().FirstAsync(expression);
         }
     }
 }

@@ -4,7 +4,6 @@ using WebApi.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.ConfigureAppSecurity();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -15,6 +14,7 @@ builder.Services.AddDbContext<LabTradeDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
 });
 
+builder.ConfigureAppSecurity();
 builder.Services.AddWebServices();
 builder.Services.AddRepositories();
 var app = builder.Build();

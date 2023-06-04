@@ -11,5 +11,6 @@ namespace DataAccess.Repositories.Interfaces
         IQueryable<T> GetByCondition(Expression<Func<T, bool>> expression);
         IQueryable<T>? Include(params Expression<Func<T, object>>[] expression);
         void Update(T entity);
+        Task<T> GetFirstAsync(Expression<Func<T, bool>> expression);
     }
 }
