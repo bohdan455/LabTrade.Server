@@ -1,4 +1,5 @@
-﻿using DataAccess.Entities.Money;
+﻿using DataAccess.Entities.Lab;
+using DataAccess.Entities.Money;
 using DataAccess.Entities.User;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,8 @@ namespace DataAccess
             base.OnModelCreating(modelBuilder);
             
         }
+        public DbSet<LabFile> Files { get; set; }
+        
         public LabTradeDbContext(DbContextOptions<LabTradeDbContext> options) : base(options)
         {
 

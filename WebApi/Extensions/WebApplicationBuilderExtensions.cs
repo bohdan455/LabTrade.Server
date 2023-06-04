@@ -1,7 +1,11 @@
 ﻿using BLL.Services.Interfaces;
 using BLL.Services.Realizations.Jwt;
 using DataAccess;
+using DataAccess.Entities.Money;
 using DataAccess.Entities.User;
+using DataAccess.Repositories.Realizations.Lab;
+using DataAccess.Repositories.Realizations.Money;
+using DataAccess.Repositories.Realizations.User;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
@@ -37,6 +41,15 @@ namespace WebApi.Extensions
         public static IServiceCollection AddWebServices(this IServiceCollection services)
         {
             services.AddSingleton<IJwtTokenService,JwtTokenService>();
+            return services;
+        }
+        public static IServiceCollection AddRepositories(this IServiceCollection services)
+        {
+            services.AddTransient<LabFileRepository>();
+            services.AddTransient<LabWorkRepository>();
+            services.AddTransient<UniversityRepository>();
+            services.AddTransient<TransactionRepository>();
+            services.AddTransient<SellerRepository>();
             return services;
         }
     }

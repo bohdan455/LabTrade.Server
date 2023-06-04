@@ -35,7 +35,7 @@ namespace DataAccess.Entities.Lab
         [Required]
         public string Number { get; set; } = string.Empty;
         [Required]
-        public File File { get; set; }
+        public LabFile File { get; set; }
 
     }
 }

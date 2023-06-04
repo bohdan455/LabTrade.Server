@@ -16,6 +16,7 @@ builder.Services.AddDbContext<LabTradeDbContext>(options =>
 });
 
 builder.Services.AddWebServices();
+builder.Services.AddRepositories();
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())

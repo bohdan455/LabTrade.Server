@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Entities.Lab
 {
-    public class File
+    public class LabFile
     {
         public int Id { get; set; }
         [MaxLength(255)]
