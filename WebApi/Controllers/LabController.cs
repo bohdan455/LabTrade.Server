@@ -20,9 +20,9 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromForm] LabWorkDto labWorkDto)
+        public async Task<IActionResult> CreateAsync([FromForm] LabWorkDto labWorkDto)
         {
-            _labWorkService.Create(labWorkDto);
+            await _labWorkService.Create(labWorkDto);
             return Ok();
         }
     }

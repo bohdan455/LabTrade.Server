@@ -29,7 +29,7 @@ namespace BLL.Services.Realizations.Lab
         {
             var labwork = labWorkDto.ToLabWork();
             //TODO change it to another method
-            var university = _universityRepository.GetByCondition(u => u.Id == labWorkDto.UniversityId).First();
+            var university = await _universityRepository.GetFirstAsync(u => u.Id == labWorkDto.UniversityId);
             labwork.University = university;
 
             var file = await _labFileService.Create(labWorkDto.ToLabFileDto());
