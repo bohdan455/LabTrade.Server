@@ -29,12 +29,8 @@ namespace DataAccess.Repositories.Realizations.Base
         }
         public void Create(T entity)
         {
-            //TODO Delete this
-            Console.WriteLine("Start");
             _context.Set<T>().Add(entity);
-            _context.SaveChanges();
-            //TODO Delete this
-            Console.WriteLine("End");
+            _context.SaveChanges();;
         }
         public async Task CreateAsync(T entity)
         {
@@ -44,15 +40,18 @@ namespace DataAccess.Repositories.Realizations.Base
         public void Update(T entity)
         {
             _context.Set<T>().Update(entity);
+            _context.SaveChanges();
         }
         public void Delete(T entity)
         {
             _context.Set<T>().Remove(entity);
+            _context.SaveChanges();
+
         }
         public IQueryable<T>? Include(params Expression<Func<T, object>>[] expression)
         {
             IIncludableQueryable<T, object> query = null;
-            if (expression.Any())
+            if (expression.Length > 0)
                 query = _context.Set<T>().Include(expression[0]);
 
             for (int queryIndex = 1; queryIndex < expression.Length; queryIndex++)

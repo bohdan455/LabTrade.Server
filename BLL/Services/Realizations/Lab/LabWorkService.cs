@@ -10,6 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Claims;
 using DataAccess.Repositories.Interfaces;
+using System.Diagnostics.Contracts;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace BLL.Services.Realizations.Lab
 {
@@ -43,6 +45,17 @@ namespace BLL.Services.Realizations.Lab
             labwork.Seller = seller;
             _labWorkRepository.Create(labwork);
 
+        }
+        public async Task<bool> Delete(int id, ClaimsPrincipal user)
+        {
+            var username = user.Identity.Name;
+            var labwork = _labWorkRepository.Include(u => u.Seller).FirstOrDefault(u => u.Id == id);
+            if(labwork is null) return false;
+
+            if (labwork.Seller.UserName != username) return false;
+            _labWorkRepository.Delete(labwork);
+
+            return true;
         }
     }
 }

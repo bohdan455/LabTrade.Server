@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     [Route("api/[controller]")]
     //TODO Add authorize
@@ -20,6 +19,7 @@ namespace WebApi.Controllers
         {
             _labWorkService = labWorkService;
         }
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromForm] LabWorkDto labWorkDto)
         {
@@ -27,6 +27,23 @@ namespace WebApi.Controllers
             
             await _labWorkService.Create(labWorkDto, User);
             return Ok();
+        }
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpDelete]
+        //TODO delete\fix fromfrom
+        public async Task<IActionResult> DeleteAsync([FromForm]int id)
+        {
+            var result = await _labWorkService.Delete(id, User);
+            if (result)
+            {
+                return Ok();
+            }
+            else
+            {
+                //TODO disable redirection
+                return Forbid();
+            }
+
         }
     }
 }
