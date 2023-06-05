@@ -9,5 +9,6 @@ namespace Resources
     public static class LabFileSetting
     {
         public static string Path => @"D:\LabFiles";
+        public static int ElementsPerPage => 20;
     }
 }

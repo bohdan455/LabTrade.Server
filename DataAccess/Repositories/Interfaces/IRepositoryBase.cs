@@ -12,5 +12,6 @@ namespace DataAccess.Repositories.Interfaces
         IQueryable<T>? Include(params Expression<Func<T, object>>[] expression);
         void Update(T entity);
         Task<T> GetFirstAsync(Expression<Func<T, bool>> expression);
+        IQueryable<T> GetInRange(int startIndex, int endIndex, Expression<Func<T, bool>>? filter = null, Expression<Func<T, bool>>? sorting = null);
     }
 }

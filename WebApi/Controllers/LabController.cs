@@ -43,7 +43,14 @@ namespace WebApi.Controllers
                 //TODO disable redirection
                 return Forbid();
             }
+        }
+        //TODO Add update endpoint
 
+        [HttpGet("{page:int}/{elementsPerPage:int}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetInRange(int page, int elementsPerPage)
+        {
+            return Ok();
         }
     }
 }

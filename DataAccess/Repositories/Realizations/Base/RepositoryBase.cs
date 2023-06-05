@@ -15,7 +15,7 @@ namespace DataAccess.Repositories.Realizations.Base
     {
         private readonly LabTradeDbContext _context;
 
-        public RepositoryBase(LabTradeDbContext context)
+        protected RepositoryBase(LabTradeDbContext context)
         {
             _context = context;
         }
@@ -64,6 +64,14 @@ namespace DataAccess.Repositories.Realizations.Base
         public async Task<T> GetFirstAsync(Expression<Func<T, bool>> expression)
         {
             return await _context.Set<T>().FirstAsync(expression);
+        }
+        public IQueryable<T> GetInRange(int startIndex,int endIndex,Expression<Func<T,bool>>? filter = null, Expression<Func<T, bool>>? sorting = null)
+        {
+            return _context.Set<T>()
+                .Where(filter)
+                .OrderBy(sorting)
+                .Skip(startIndex)
+                .Take(endIndex);
         }
     }
 }
