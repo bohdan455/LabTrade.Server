@@ -7,5 +7,6 @@ namespace BLL.Services.Interfaces
     {
         Task Create(LabWorkDto labWorkDto, ClaimsPrincipal user);
         Task<bool> Delete(int id, ClaimsPrincipal user);
+        IEnumerable<LabWorkDisplayDto> GetRange(int page, int step);
     }
 }

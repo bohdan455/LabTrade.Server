@@ -67,11 +67,14 @@ namespace DataAccess.Repositories.Realizations.Base
         }
         public IQueryable<T> GetInRange(int startIndex,int endIndex,Expression<Func<T,bool>>? filter = null, Expression<Func<T, bool>>? sorting = null)
         {
-            return _context.Set<T>()
-                .Where(filter)
-                .OrderBy(sorting)
-                .Skip(startIndex)
-                .Take(endIndex);
+            IQueryable<T> query = _context.Set<T>();
+            if(filter is not null)
+                query = query.Where(filter);
+
+            if(sorting is not null)
+                query = query.OrderBy(sorting);
+
+            return query.Skip(startIndex).Take(endIndex);
         }
     }
 }

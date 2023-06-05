@@ -57,10 +57,18 @@ namespace BLL.Services.Realizations.Lab
 
             return true;
         }
-        //public async Task<> Get(int page,int step)
-        //{
-        //    var numberOfElementToSkip = step * (page - 1);
-        //    _labWorkRepository.GetInRange(numberOfElementToSkip, step).Include(l=>l.University).Select();
-        //}
+        public IEnumerable<LabWorkDisplayDto> GetRange(int page, int step)
+        {
+            var numberOfElementToSkip = step * (page - 1);
+            return _labWorkRepository
+                .GetInRange(numberOfElementToSkip, step)
+                .Include(l => l.University)
+                .Select(l => new LabWorkDisplayDto
+                {
+                    Title = l.Title,
+                    Price = l.Price,
+                    University = l.University.Name
+                });
+        }
     }
 }

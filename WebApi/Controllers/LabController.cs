@@ -50,8 +50,8 @@ namespace WebApi.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> GetInRange(int page, int elementsPerPage)
         {
-
-            return Ok();
+            var result =_labWorkService.GetRange(page, elementsPerPage);
+            return Ok(result);
         }
     }
 }
