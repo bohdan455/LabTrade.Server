@@ -15,7 +15,7 @@ namespace DataAccess.Entities.Lab
         public int Id { get; set; }
         [MaxLength(255)]
         [Required]
-        public string Name { get; set; } = string.Empty;
+        public string Title { get; set; } = string.Empty;
         [MaxLength(500)]
         [Required]
         public string Description { get; set; } = string.Empty;
@@ -23,18 +23,7 @@ namespace DataAccess.Entities.Lab
         [Column(TypeName = "decimal(8,2)")]
         public decimal Price { get; set; }
         [Required]
-        public University University { get; set; }
-        [Required]
-        public int Year { get; set; }
-        [MaxLength(255)]
-        [Required]
-        public string Subject { get; set; } = string.Empty;
-        [MaxLength(255)]
-        [Required]
-        public string Type { get; set; } = string.Empty;
-        [MaxLength(20)]
-        [Required]
-        public string Number { get; set; } = string.Empty;
+        public University University { get; set; }        
         [Required]
         public LabFile File { get; set; }
         [MaxLength(450)]

@@ -14,21 +14,16 @@ namespace BLL.ExtensionMethods.Mapping
         {
             return new LabWork
             {
-                Name = labWorkDto.Name,
+                Title = labWorkDto.Title,
                 Description = labWorkDto.Description,
-                Number = labWorkDto.Number,
                 Price = labWorkDto.Price,
-                Subject = labWorkDto.Subject,
-                Type = labWorkDto.Type,
-                Year = labWorkDto.Year
             };
         }
         public static LabFileDto ToLabFileDto(this LabWorkDto labWorkDto)
         {
-            var name = $"{labWorkDto.Year} курс {labWorkDto.Subject} {labWorkDto.Type}-{labWorkDto.Number}";
             return new LabFileDto
             {
-                Name = name,
+                Name = labWorkDto.Title,
                 File = labWorkDto.File
             };
         }
