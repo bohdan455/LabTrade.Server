@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataAccess.Entities.User;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -36,6 +37,11 @@ namespace DataAccess.Entities.Lab
         public string Number { get; set; } = string.Empty;
         [Required]
         public LabFile File { get; set; }
+        [MaxLength(450)]
+        [Required]
+        public string SellerId { get; set; }
+        [Required]
+        public Seller Seller{ get; set; }
 
     }
 }

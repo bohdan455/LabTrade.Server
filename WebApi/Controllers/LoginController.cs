@@ -13,6 +13,7 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [AllowAnonymous]
     public class LoginController : ControllerBase
     {
         private readonly SignInManager<Seller> _signInManager;
@@ -42,7 +43,11 @@ namespace WebApi.Controllers
             var result = await _signInManager.CheckPasswordSignInAsync(seller, sellerLoginDto.Password,true);
             if (result.Succeeded)
             {
-                var token = _jwtTokenService.GenerateToken();
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, seller.UserName)
+                };
+                var token = _jwtTokenService.GenerateToken(claims);
                 return Ok(new {token});
             }
             else if (result.IsLockedOut)

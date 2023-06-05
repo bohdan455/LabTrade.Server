@@ -2,11 +2,13 @@
 using BLL.ExtensionMethods.Mapping;
 using BLL.Services.Interfaces;
 using DataAccess.Repositories.Realizations.Lab;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     [Route("api/[controller]")]
     //TODO Add authorize
@@ -18,11 +20,12 @@ namespace WebApi.Controllers
         {
             _labWorkService = labWorkService;
         }
-
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromForm] LabWorkDto labWorkDto)
         {
-            await _labWorkService.Create(labWorkDto);
+            if(!ModelState.IsValid) return BadRequest(ModelState);
+            
+            await _labWorkService.Create(labWorkDto, User);
             return Ok();
         }
     }

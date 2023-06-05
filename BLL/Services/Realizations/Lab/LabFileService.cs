@@ -2,6 +2,7 @@
 using BLL.Services.Interfaces;
 using DataAccess.Entities.Lab;
 using DataAccess.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Resources;
 using System;
@@ -20,6 +21,7 @@ namespace BLL.Services.Realizations.Lab
         {
             _labFileRepository = labFileRepository;
         }
+
         public async Task<LabFile> Create(LabFileDto labFileDto)
         {
             var guid = Guid.NewGuid().ToString();
