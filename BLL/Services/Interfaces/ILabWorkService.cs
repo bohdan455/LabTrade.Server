@@ -5,8 +5,9 @@ namespace BLL.Services.Interfaces
 {
     public interface ILabWorkService
     {
-        Task Create(LabWorkDto labWorkDto, ClaimsPrincipal user);
-        Task<bool> Delete(int id, ClaimsPrincipal user);
+        Task CreateAsync(LabWorkDto labWorkDto, ClaimsPrincipal user);
+        Task<bool> DeleteAsync(int id, ClaimsPrincipal user);
+        Task<LabWorkDisplayDto> GetByIdAsync(int id);
         IEnumerable<LabWorkDisplayDto> GetRange(int page, int step);
     }
 }

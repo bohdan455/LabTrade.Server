@@ -22,7 +22,7 @@ namespace BLL.Services.Realizations.Lab
             _labFileRepository = labFileRepository;
         }
 
-        public async Task<LabFile> Create(LabFileDto labFileDto)
+        public async Task<LabFile> CreateAsync(LabFileDto labFileDto)
         {
             var guid = Guid.NewGuid().ToString();
             var file = labFileDto.File;

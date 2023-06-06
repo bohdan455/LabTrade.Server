@@ -5,6 +5,6 @@ namespace BLL.Services.Interfaces
 {
     public interface ILabFileService
     {
-        Task<LabFile> Create(LabFileDto labFileDto);
+        Task<LabFile> CreateAsync(LabFileDto labFileDto);
     }
 }

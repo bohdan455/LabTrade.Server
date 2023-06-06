@@ -25,7 +25,7 @@ namespace WebApi.Controllers
         {
             if(!ModelState.IsValid) return BadRequest(ModelState);
             
-            await _labWorkService.Create(labWorkDto, User);
+            await _labWorkService.CreateAsync(labWorkDto, User);
             return Ok();
         }
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -33,7 +33,7 @@ namespace WebApi.Controllers
         //TODO delete\fix fromfrom
         public async Task<IActionResult> DeleteAsync([FromForm]int id)
         {
-            var result = await _labWorkService.Delete(id, User);
+            var result = await _labWorkService.DeleteAsync(id, User);
             if (result)
             {
                 return Ok();
@@ -48,9 +48,17 @@ namespace WebApi.Controllers
 
         [HttpGet("{page:int}/{elementsPerPage:int}")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetInRange(int page, int elementsPerPage)
+        public async Task<IActionResult> GetInRangeAsync(int page, int elementsPerPage)
         {
             var result =_labWorkService.GetRange(page, elementsPerPage);
+            return Ok(result);
+        }
+        [HttpGet("{id:int}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetByIdAsync(int id)
+        {
+            var result = await _labWorkService.GetByIdAsync(id);
+            if (result is null) return NotFound();
             return Ok(result);
         }
     }

@@ -1,17 +1,10 @@
 ﻿using BLL.Dto.Lab;
 using BLL.ExtensionMethods.Mapping;
 using BLL.Services.Interfaces;
+using DataAccess.Repositories.Interfaces;
 using DataAccess.Repositories.Realizations.Lab;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Security.Claims;
-using DataAccess.Repositories.Interfaces;
-using System.Diagnostics.Contracts;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace BLL.Services.Realizations.Lab
 {
@@ -32,21 +25,21 @@ namespace BLL.Services.Realizations.Lab
             _labFileService = labFileService;
             _sellerRepository = sellerRepository;
         }
-        public async Task Create(LabWorkDto labWorkDto, ClaimsPrincipal user)
+        public async Task CreateAsync(LabWorkDto labWorkDto, ClaimsPrincipal user)
         {
             var labwork = labWorkDto.ToLabWork();
             //TODO change it to another method
             var university = await _universityRepository.GetFirstAsync(u => u.Id == labWorkDto.UniversityId);
             labwork.University = university;
 
-            var file = await _labFileService.Create(labWorkDto.ToLabFileDto());
+            var file = await _labFileService.CreateAsync(labWorkDto.ToLabFileDto());
             labwork.File = file;
             var seller = await _sellerRepository.GetFirstAsync(s => s.UserName == user.Identity.Name);
             labwork.Seller = seller;
             _labWorkRepository.Create(labwork);
 
         }
-        public async Task<bool> Delete(int id, ClaimsPrincipal user)
+        public async Task<bool> DeleteAsync(int id, ClaimsPrincipal user)
         {
             var username = user.Identity.Name;
             var labwork = _labWorkRepository.Include(u => u.Seller).FirstOrDefault(u => u.Id == id);
@@ -69,6 +62,20 @@ namespace BLL.Services.Realizations.Lab
                     Price = l.Price,
                     University = l.University.Name
                 });
+        }
+        public async Task<LabWorkDisplayDto> GetByIdAsync(int id)
+        {
+            var labWork = await _labWorkRepository.Include(l => l.University)?.FirstOrDefaultAsync(l => l.Id == id);
+
+            if (labWork is null) return null;
+
+            var labWorkDisplayDto = new LabWorkDisplayDto
+            {
+                Title = labWork.Title,
+                Price = labWork.Price,
+                University = labWork.University.Name
+            };
+            return labWorkDisplayDto;
         }
     }
 }
