@@ -1,6 +1,7 @@
 ﻿using BLL.Dto.Users;
 using BLL.ExtensionMethods.Mapping;
 using DataAccess.Entities.User;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,6 +17,7 @@ namespace WebApi.Controllers
         {
             _userManager = userManager;
         }
+        [AllowAnonymous]
         [HttpPost("password")]
         public async Task<IActionResult> RegisterWithPasswordAsync([FromForm]SellerRegistrationDto sellerRegistrationDto)
         {

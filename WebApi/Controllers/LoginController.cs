@@ -27,6 +27,7 @@ namespace WebApi.Controllers
             _jwtTokenService = jwtTokenService;
         }
         [HttpPost("password")]
+        [AllowAnonymous]
         public async Task<IActionResult> LoginWithPassword([FromForm]SellerLoginDto sellerLoginDto)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);

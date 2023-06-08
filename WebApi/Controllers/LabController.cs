@@ -45,10 +45,14 @@ namespace WebApi.Controllers
             }
         }
         //TODO Add update endpoint
-
+        //[HttpPut]
+        //public IActionResult Update()
+        //{
+        //    return Ok();
+        //}
         [HttpGet("{page:int}/{elementsPerPage:int}")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetInRangeAsync(int page, int elementsPerPage)
+        public IActionResult GetInRange(int page, int elementsPerPage)
         {
             var result =_labWorkService.GetRange(page, elementsPerPage);
             return Ok(result);
