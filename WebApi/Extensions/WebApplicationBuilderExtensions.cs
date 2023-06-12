@@ -1,6 +1,7 @@
 ﻿using BLL.Services.Interfaces;
 using BLL.Services.Realizations.Jwt;
 using BLL.Services.Realizations.Lab;
+using BLL.Services.Realizations.Money;
 using DataAccess;
 using DataAccess.Entities.Money;
 using DataAccess.Entities.User;
@@ -45,6 +46,7 @@ namespace WebApi.Extensions
             services.AddSingleton<IJwtTokenService,JwtTokenService>();
             services.AddTransient<ILabFileService,LabFileService>();
             services.AddTransient<ILabWorkService,LabWorkService>();
+            services.AddTransient<ITransactionService,TransactionService>();
             return services;
         }
         public static IServiceCollection AddRepositories(this IServiceCollection services)

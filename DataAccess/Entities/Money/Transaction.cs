@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataAccess.Entities.Lab;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -12,6 +13,8 @@ namespace DataAccess.Entities.Money
     {
         [Key]
         public Guid Id { get; set; }
+        [Required]
+        public LabWork PurchasedLabWork { get; set; }
         [Required]
         [Column(TypeName = "decimal(8,2)")]
         public decimal Amount { get; set; }

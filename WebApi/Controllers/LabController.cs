@@ -14,10 +14,12 @@ namespace WebApi.Controllers
     public class LabController : ControllerBase
     {
         private readonly ILabWorkService _labWorkService;
+        private readonly ITransactionService _transactionService;
 
-        public LabController(ILabWorkService labWorkService)
+        public LabController(ILabWorkService labWorkService,ITransactionService transactionService)
         {
             _labWorkService = labWorkService;
+            _transactionService = transactionService;
         }
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
@@ -64,6 +66,14 @@ namespace WebApi.Controllers
             var result = await _labWorkService.GetByIdAsync(id);
             if (result is null) return NotFound();
             return Ok(result);
+        }
+        [HttpGet("purchases/{id:int}")]
+        [AllowAnonymous]
+        //TODO optionaly change it to require auth
+        public async Task<IActionResult> GetNumberOfPurchasesById(int id)
+        {
+            var number = _transactionService.GetNumberOfPurchasedLabWorks(id);
+            return Ok(number);
         }
     }
 }
