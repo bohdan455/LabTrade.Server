@@ -15,9 +15,10 @@ namespace Tests.Controllers
     {
         public readonly LabController _labController;
         public readonly Mock<ILabWorkService> _labWorkServiceMock = new();
+        public readonly Mock<ITransactionService> _transactionServiceMock = new();
         public LabControllerTests()
         {
-            _labController = new LabController(_labWorkServiceMock.Object);
+            _labController = new LabController(_labWorkServiceMock.Object, _transactionServiceMock.Object);
             
         }
         [Fact]

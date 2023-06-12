@@ -29,7 +29,6 @@ namespace BLL.Services.Realizations.Lab
         public async Task CreateAsync(LabWorkDto labWorkDto, ClaimsPrincipal user)
         {
             var labwork = labWorkDto.ToLabWork();
-            //TODO change it to another method
             var university = await _universityRepository.GetFirstAsync(u => u.Id == labWorkDto.UniversityId);
             labwork.University = university;
 
@@ -43,7 +42,7 @@ namespace BLL.Services.Realizations.Lab
         public async Task<bool> DeleteAsync(int id, ClaimsPrincipal user)
         {
             var username = user.Identity.Name;
-            var labwork = _labWorkRepository.Include(u => u.Seller).FirstOrDefault(u => u.Id == id);
+            var labwork = _labWorkRepository.Include(u => u.Seller)?.FirstOrDefault(u => u.Id == id);
             if(labwork is null) return false;
 
             if (labwork.Seller.UserName != username) return false;
@@ -66,6 +65,7 @@ namespace BLL.Services.Realizations.Lab
         }
         public async Task<LabWorkDisplayDto> GetByIdAsync(int id)
         {
+            //TODO probably change to FirstOrDefault
             var labWork = await _labWorkRepository.Include(l => l.University)?.FirstOrDefaultAsync(l => l.Id == id);
 
             if (labWork is null) return null;
